@@ -3,8 +3,9 @@ function validateLogin() {
     const password = document.getElementById("password").value;
 
     if (username === "Akira" && password === "Gore#15") {
-        alert("Login successful! Welcome, Akira.");
-        return true; // Remplace par une redirection ou une action réelle si nécessaire
+        alert("Login successful! Redirecting to the dashboard...");
+        window.location.href = "dashboard.html"; // Redirection vers la nouvelle page
+        return false; // Empêche le rechargement du formulaire
     } else {
         document.getElementById("loginMessage").textContent = "Invalid username or password.";
         document.getElementById("loginMessage").style.color = "red";
