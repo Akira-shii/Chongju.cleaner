@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chongju Cleaner.Co</title>
+    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
+</head>
+<body>
+    <header>
+        <h1>Chongju Cleaner.Co</h1>
+        <p>No mess. No trace.</p>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>
+                Chongju Cleaner.Co specializes in handling delicate and discreet situations. Whether it's cleaning up after accidents, handling delicate tasks, or leaving no trace, we are the professionals you need.
+            </p>
+        </section>
+
+        <section id="login">
+            <h2>Login</h2>
+            <form id="loginForm" onsubmit="return validateLogin()">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+            <p id="loginMessage"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Contact us: +82 10-1234-5678</p>
+        <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
+    </footer>
+
+    <script src="script.js"></script> <!-- Lien vers le fichier JS -->
+</body>
+</html>
