@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaner & Assassin Locations</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cleaner & Assassin Locations</h1>
+        <p>Real-time tracking of our agents in the field.</p>
+    </header>
+    <main>
+        <section id="map">
+            <h2>Current Locations</h2>
+            <div id="map"></div>
+        </section>
+    </main>
+    <footer>
+        <p>Contact us: +82 10-1234-5678</p>
+        <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialisation de la carte
+        var map = L.map('map').setView([37.5665, 126.9784], 13);  // Coordonnées de Séoul (change-les selon ton besoin)
+
+        // Ajouter la couche de fond OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Ajouter un marqueur sur la carte
+        var marker = L.marker([37.5665, 126.9784]).addTo(map);  // Coordonnées du marqueur
+        marker.bindPopup("<b>Cleaner Location</b><br>Current location of the agent.").openPopup();
+    </script>
+</body>
+</html>
