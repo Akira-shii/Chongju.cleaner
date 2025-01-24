@@ -4,106 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Reservations</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Basic Styling */
         body {
+            background-color: #000;
+            color: #f00;
             font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
             text-align: center;
             padding: 20px;
+            background-color: #111;
+            border-bottom: 1px solid #f00;
         }
 
-        header {
-            margin-bottom: 30px;
-        }
-
-        .reservation-list {
-            margin-top: 20px;
-        }
-
-        .reservation-card {
-            background-color: #1c1c1c;
-            border: 1px solid #8b0000;
+        main {
             padding: 20px;
-            margin: 10px auto;
-            width: 80%;
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid #f00;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
             text-align: left;
-            border-radius: 8px;
-            color: white;
-        }
-
-        .reservation-card h3 {
-            margin-top: 0;
-        }
-
-        .reservation-card p {
-            margin: 5px 0;
+            border: 1px solid #f00;
         }
 
         button {
-            background-color: #8b0000;
-            color: white;
-            padding: 10px;
+            background-color: #f00;
+            color: #000;
             border: none;
+            padding: 10px;
+            margin: 20px 0;
             cursor: pointer;
-            margin-top: 15px;
         }
 
         button:hover {
-            background-color: #b22222;
+            background-color: #c00;
         }
     </style>
 </head>
 <body>
-
     <header>
         <h1>Your Reservations</h1>
-        <p>Here are your current reservations.</p>
     </header>
 
-    <div class="reservation-list" id="reservationList">
-        <!-- Reservations will be dynamically inserted here -->
-    </div>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Agent</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="reservationsList">
+                <!-- Reservations will be listed here -->
+            </tbody>
+        </table>
+        <button onclick="window.location.href='map.html';">Back to Map</button>
+    </main>
 
-    <button onclick="goBack()">Go Back</button>
+    <footer>
+        <p>Contact us: +82 10-1234-5678</p>
+        <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
+    </footer>
 
     <script>
-        // Function to load reservations from localStorage
-        function loadReservations() {
+        window.onload = function() {
             const reservations = JSON.parse(localStorage.getItem('reservations')) || [];
-            const reservationList = document.getElementById('reservationList');
+            const reservationsList = document.getElementById('reservationsList');
 
             if (reservations.length === 0) {
-                reservationList.innerHTML = '<p>No reservations found.</p>';
-                return;
+                reservationsList.innerHTML = '<tr><td colspan="5">No reservations found</td></tr>';
+            } else {
+                reservations.forEach(function(reservation) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${reservation.agentName}</td>
+                        <td>${reservation.date}</td>
+                        <td>${reservation.time}</td>
+                        <td>${reservation.location}</td>
+                        <td>$${reservation.price}</td>
+                    `;
+                    reservationsList.appendChild(row);
+                });
             }
-
-            reservations.forEach(reservation => {
-                const reservationCard = document.createElement('div');
-                reservationCard.classList.add('reservation-card');
-                reservationCard.innerHTML = `
-                    <h3>${reservation.agentName}</h3>
-                    <p><strong>Date:</strong> ${reservation.date}</p>
-                    <p><strong>Time:</strong> ${reservation.time}</p>
-                    <p><strong>Location:</strong> ${reservation.location}</p>
-                    <p><strong>Weapon:</strong> ${reservation.weapon}</p>
-                    <p><strong>Crime Type:</strong> ${reservation.crimeType}</p>
-                    <p><strong>Price:</strong> $${reservation.price}</p>
-                `;
-                reservationList.appendChild(reservationCard);
-            });
-        }
-
-        // Function to go back to the map page
-        function goBack() {
-            window.location.href = 'map.html';
-        }
-
-        // Load reservations when the page loads
-        window.onload = loadReservations;
+        };
     </script>
-
 </body>
 </html>
