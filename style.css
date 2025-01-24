@@ -1,76 +1,89 @@
+/* Configuration générale */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #000000, #B71C1C);
-    color: #E0E0E0;
+    background: linear-gradient(to bottom, #2b0000, #6d0101);
+    color: #e0e0e0;
+    overflow-y: auto;
 }
 
 header {
-    background-color: #1A1A1A;
     text-align: center;
     padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #d32f2f;
 }
 
-header h1 {
-    color: #D32F2F;
-    font-size: 3em;
+#logo {
+    width: 150px;
+    margin-bottom: 10px;
 }
 
-header p {
-    font-size: 1.5em;
-    color: #BDBDBD;
+.slogan {
+    font-style: italic;
+    color: #e57373;
 }
 
 main {
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 200px);
 }
 
-section {
-    margin-bottom: 20px;
-}
-
-h2 {
-    color: #D32F2F;
-}
-
-form {
-    background: #1A1A1A;
+#login-container {
+    background: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 form label {
     display: block;
     margin: 10px 0 5px;
+    color: #ffcccc;
 }
 
 form input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #444;
+    border: 1px solid #ffcccc;
     border-radius: 4px;
-    background: #333;
-    color: #FFF;
+    background: #330000;
+    color: #ffffff;
+}
+
+form input::placeholder {
+    color: #ff9999;
 }
 
 form button {
-    background-color: #D32F2F;
-    color: #FFF;
+    width: 100%;
+    background-color: #d32f2f;
+    color: #ffffff;
     border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+    padding: 10px;
     border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
 }
 
 form button:hover {
-    background-color: #B71C1C;
+    background-color: #b71c1c;
 }
 
 footer {
-    background-color: #1A1A1A;
-    color: #BDBDBD;
+    background: rgba(0, 0, 0, 0.9);
     text-align: center;
     padding: 10px;
+    color: #bdbdbd;
+    position: relative;
+    bottom: 0;
+}
+
+footer p {
+    margin: 5px 0;
 }
