@@ -1,130 +1,76 @@
-/* Styles de base */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #000000, #4A0000);
+    background: linear-gradient(to bottom, #000000, #B71C1C);
     color: #E0E0E0;
-    overflow: hidden; /* Évite les défilements inattendus */
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    position: relative;
+header {
+    background-color: #1A1A1A;
     text-align: center;
+    padding: 20px;
 }
 
-/* Header (logo et texte principal) */
-.header {
-    text-align: center;
-    margin-bottom: 30px;
+header h1 {
+    color: #D32F2F;
+    font-size: 3em;
 }
 
-.header .logo {
-    width: 150px;
-    height: auto;
-    margin-bottom: 10px;
+header p {
+    font-size: 1.5em;
+    color: #BDBDBD;
 }
 
-.header .title {
-    font-size: 2.5em;
-    color: #E53935;
-    margin: 0;
+main {
+    padding: 20px;
 }
 
-.header .subtitle {
-    font-size: 1.2em;
-    color: #FFCDD2;
-    font-style: italic;
-    margin-top: 5px;
+section {
+    margin-bottom: 20px;
 }
 
-/* Formulaire de connexion */
-#loginForm {
+h2 {
+    color: #D32F2F;
+}
+
+form {
     background: #1A1A1A;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-    width: 300px;
 }
 
-.form-label {
-    color: #FFAB91;
-    text-align: left;
+form label {
     display: block;
-    margin-bottom: 5px;
+    margin: 10px 0 5px;
 }
 
-.form-input {
+form input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #B71C1C;
+    border: 1px solid #444;
     border-radius: 4px;
-    background: #2A2A2A;
+    background: #333;
     color: #FFF;
 }
 
-.form-input::placeholder {
-    color: #888;
-}
-
-.form-button {
+form button {
     background-color: #D32F2F;
     color: #FFF;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 4px;
-    width: 100%;
-    font-size: 1em;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
 }
 
-.form-button:hover {
+form button:hover {
     background-color: #B71C1C;
 }
 
-/* Message d'erreur */
-#loginMessage {
-    margin-top: 10px;
-    font-size: 0.9em;
-}
-
-/* Effets de fond */
-.background-effect, .background-effect2 {
-    position: absolute;
-    width: 250px;
-    height: auto;
-    opacity: 0.5;
-}
-
-.background-effect {
-    top: 10%;
-    left: 5%;
-    transform: rotate(10deg);
-}
-
-.background-effect2 {
-    bottom: 10%;
-    right: 5%;
-    transform: rotate(-15deg);
-}
-
-/* Pied de page */
 footer {
-    position: absolute;
-    bottom: 10px;
-    text-align: center;
-    width: 100%;
-}
-
-.footer-text {
+    background-color: #1A1A1A;
     color: #BDBDBD;
-    font-size: 0.9em;
+    text-align: center;
+    padding: 10px;
 }
