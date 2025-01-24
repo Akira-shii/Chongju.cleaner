@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaner & Assassin Info</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Style général */
+        body {
+            background-color: #000; /* Fond noir */
+            color: #f00; /* Texte rouge */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #111;
+            border-bottom: 1px solid #f00;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .agent {
+            border: 1px solid #f00;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #111;
+        }
+
+        .agent h3 {
+            margin: 0 0 10px 0;
+            color: #fff;
+        }
+
+        .agent p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cleaner & Assassin Details</h1>
+        <p>Browse detailed information about our professionals.</p>
+    </header>
+
+    <main id="agentContainer">
+        <!-- Les informations sur les agents seront insérées ici par le script -->
+    </main>
+
+    <footer>
+        <p>Contact us: +82 10-1234-5678</p>
+        <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
+    </footer>
+
+    <script>
+        // Liste de surnoms coréens aléatoires pour les nettoyeurs et assassins
+        const koreanNicknames = [
+            '청소의 신 (God of Cleaning)', '검은 칼날 (Black Blade)', '붉은 그림자 (Red Shadow)',
+            '조용한 발걸음 (Silent Steps)', '깨끗한 손길 (Clean Touch)', '강철 심장 (Steel Heart)',
+            '어둠 속의 눈 (Eyes in the Dark)', '바람의 그림자 (Shadow of the Wind)', '피의 그림자 (Shadow of Blood)'
+        ];
+
+        // Modes de déplacement possibles
+        const travelModes = ['Car', 'Motorbike', 'Bicycle', 'On Foot', 'Helicopter', 'Boat'];
+
+        // Fonction pour générer des informations aléatoires sur les agents
+        function generateAgentInfo(id, type) {
+            const nickname = koreanNicknames[Math.floor(Math.random() * koreanNicknames.length)];
+            const price = (Math.random() * 500 + 500).toFixed(2); // Prix entre 500 et 1000
+            const travelMode = travelModes[Math.floor(Math.random() * travelModes.length)];
+            return {
+                id: id,
+                type: type,
+                nickname: nickname,
+                price: `$${price}`,
+                travelMode: travelMode
+            };
+        }
+
+        // Générer des agents et les afficher
+        function displayAgents() {
+            const container = document.getElementById('agentContainer');
+            container.innerHTML = ''; // Effacer le contenu existant
+
+            for (let i = 0; i < 100; i++) {
+                const type = i % 2 === 0 ? 'Cleaner' : 'Assassin';
+                const agentInfo = generateAgentInfo(`Agent-${i + 1}`, type);
+
+                // Créer l'élément HTML pour chaque agent
+                const agentDiv = document.createElement('div');
+                agentDiv.className = 'agent';
+                agentDiv.innerHTML = `
+                    <h3>${agentInfo.nickname}</h3>
+                    <p><b>Type:</b> ${agentInfo.type}</p>
+                    <p><b>Price:</b> ${agentInfo.price}</p>
+                    <p><b>Mode of Travel:</b> ${agentInfo.travelMode}</p>
+                `;
+
+                container.appendChild(agentDiv);
+            }
+        }
+
+        // Initialiser l'affichage des agents
+        displayAgents();
+    </script>
+</body>
+</html>
