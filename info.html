@@ -41,6 +41,59 @@
         <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
     </footer>
 
-    <script src="info.js"></script>
+    <script>
+        // JavaScript pour afficher et fermer la modal
+        document.addEventListener('DOMContentLoaded', function() {
+            const agentContainer = document.getElementById('agentContainer');
+            const reservationModal = document.getElementById('reservationModal');
+            const closeModal = document.getElementById('closeModal');
+            const reservationForm = document.getElementById('reservationForm');
+            const confirmReservation = document.getElementById('confirmReservation');
+
+            // Exemple d'agents à afficher
+            const agents = [
+                { name: 'Agent A' },
+                { name: 'Agent B' },
+                { name: 'Agent C' }
+            ];
+
+            // Créer des boutons pour chaque agent
+            agents.forEach(agent => {
+                const agentButton = document.createElement('button');
+                agentButton.textContent = agent.name;
+                agentButton.addEventListener('click', function() {
+                    // Afficher la modal lorsqu'un agent est cliqué
+                    reservationModal.style.display = 'block';
+                });
+                agentContainer.appendChild(agentButton);
+            });
+
+            // Fermer la modal lorsque l'on clique sur la croix
+            closeModal.addEventListener('click', function() {
+                reservationModal.style.display = 'none';
+            });
+
+            // Fermer la modal si on clique en dehors de la modal
+            window.addEventListener('click', function(event) {
+                if (event.target === reservationModal) {
+                    reservationModal.style.display = 'none';
+                }
+            });
+
+            // Gérer la soumission du formulaire
+            reservationForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const date = document.getElementById('date').value;
+                const time = document.getElementById('time').value;
+                const location = document.getElementById('location').value;
+
+                // Ici, vous pouvez envoyer les données à un serveur ou les afficher
+                alert(`Réservation confirmée pour le ${date} à ${time} à ${location}`);
+
+                // Fermer la modal après la soumission
+                reservationModal.style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
