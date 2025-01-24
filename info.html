@@ -61,11 +61,41 @@
 
     <script>
         // Liste de surnoms coréens aléatoires pour les nettoyeurs et assassins
-        const koreanNicknames = [
-            '청소의 신 (God of Cleaning)', '검은 칼날 (Black Blade)', '붉은 그림자 (Red Shadow)',
-            '조용한 발걸음 (Silent Steps)', '깨끗한 손길 (Clean Touch)', '강철 심장 (Steel Heart)',
-            '어둠 속의 눈 (Eyes in the Dark)', '바람의 그림자 (Shadow of the Wind)', '피의 그림자 (Shadow of Blood)'
-        ];
+    const koreanNicknames = [
+    '청소의 신 (God of Cleaning)', '검은 칼날 (Black Blade)', '붉은 그림자 (Red Shadow)',
+    '조용한 발걸음 (Silent Steps)', '깨끗한 손길 (Clean Touch)', '강철 심장 (Steel Heart)',
+    '어둠 속의 눈 (Eyes in the Dark)', '바람의 그림자 (Shadow of the Wind)', '피의 그림자 (Shadow of Blood)',
+    '칼의 춤 (Dance of Blades)', '숨겨진 송곳 (Hidden Spike)', '밤의 사냥꾼 (Night Hunter)',
+    '독수리 눈 (Eagle Eyes)', '얼음 심장 (Ice Heart)', '번개의 검 (Sword of Lightning)',
+    '폭풍 속의 그림자 (Shadow in the Storm)', '마지막 숨결 (Last Breath)', '무음의 발자국 (Silent Footsteps)',
+    '죽음의 메아리 (Echo of Death)', '피의 날개 (Wings of Blood)', '불꽃의 칼날 (Blade of Flames)',
+    '날카로운 손길 (Sharp Touch)', '냉혈한 (Cold Blooded)', '비밀의 그림자 (Secret Shadow)',
+    '암흑의 손 (Hand of Darkness)', '무형의 살인자 (Formless Killer)', '바람의 창 (Spear of the Wind)',
+    '달빛의 암살자 (Moonlight Assassin)', '지옥의 망치 (Hammer of Hell)', '차가운 숨결 (Cold Breath)',
+    '검은 사신 (Black Reaper)', '시간의 칼날 (Blade of Time)', '영혼의 사냥꾼 (Soul Hunter)',
+    '유령의 춤 (Dance of Ghosts)', '폭풍의 발톱 (Claws of the Storm)', '칼날의 미소 (Smile of the Blade)',
+    '독의 입맞춤 (Kiss of Poison)', '어둠의 심장 (Heart of Darkness)', '고요한 파괴자 (Silent Destroyer)',
+    '빛의 그림자 (Shadow of Light)', '죽음의 예술가 (Artist of Death)', '심연의 칼날 (Abyss Blade)',
+    '얼음의 송곳니 (Fangs of Ice)', '폭발의 유령 (Ghost of Explosions)', '불멸의 검 (Immortal Blade)',
+    '은밀한 침입자 (Stealthy Intruder)', '늑대의 그림자 (Shadow of the Wolf)', '암흑의 송곳니 (Fang of Darkness)',
+    '용의 숨결 (Breath of the Dragon)', '숨겨진 발톱 (Hidden Claw)', '빛을 삼킨 자 (Swallower of Light)',
+    '피의 서약 (Oath of Blood)', '영혼의 날개 (Wings of Souls)', '폭풍의 영혼 (Storm Spirit)',
+    '날아오르는 독수리 (Rising Eagle)', '불멸의 어둠 (Immortal Darkness)', '빛의 죽음 (Death of Light)',
+    '바다의 칼날 (Blade of the Sea)', '칼날의 정령 (Spirit of the Blade)', '눈물의 그림자 (Shadow of Tears)',
+    '지옥의 불꽃 (Hellfire)', '차가운 어둠 (Cold Darkness)', '밤의 칼춤 (Night Blade Dance)',
+    '깊은 숨소리 (Deep Breath)', '어둠의 서약 (Oath of Shadows)', '하늘의 독수리 (Eagle of the Sky)',
+    '어둠 속의 미소 (Smile in the Darkness)', '피로 물든 칼 (Blood-Stained Blade)', '죽음의 시선 (Gaze of Death)',
+    '마지막 그림자 (Final Shadow)', '파괴의 손길 (Touch of Destruction)', '빛의 속삭임 (Whisper of Light)',
+    '고요한 칼날 (Silent Blade)', '밤의 악몽 (Nightmare of the Night)', '검은 태양 (Black Sun)',
+    '칼끝의 미소 (Smile at the Blade Tip)', '유령의 손길 (Ghostly Touch)', '차가운 피 (Cold Blood)',
+    '달의 사냥꾼 (Hunter of the Moon)', '눈 속의 칼날 (Blade in the Snow)', '폭풍의 심장 (Heart of the Storm)',
+    '영원의 어둠 (Eternal Darkness)', '칼날의 악몽 (Nightmare of the Blade)', '숨겨진 번개 (Hidden Lightning)',
+    '피로 적신 송곳 (Blood-Soaked Spike)', '어둠 속의 손길 (Touch in the Dark)', '차가운 그림자 (Cold Shadow)',
+    '어둠의 기사 (Knight of Darkness)', '불멸의 사냥꾼 (Immortal Hunter)', '폭풍 속의 칼춤 (Blade Dance in the Storm)',
+    '어둠의 창 (Spear of Shadows)', '죽음의 손 (Hand of Death)', '시간의 파괴자 (Destroyer of Time)',
+    '빛을 삼킨 그림자 (Shadow that Swallowed Light)', '차가운 불꽃 (Cold Flame)', '눈물의 사냥꾼 (Hunter of Tears)',
+    '어둠 속의 번개 (Lightning in the Dark)'
+    ];
 
         // Modes de déplacement possibles
         const travelModes = ['Car', 'Motorbike', 'Bicycle', 'On Foot', 'Helicopter', 'Boat'];
