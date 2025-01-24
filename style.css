@@ -151,3 +151,18 @@ footer {
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
+
+.modal-content {
+    background-color: #121212;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%; /* Largeur adaptative */
+    max-width: 500px; /* Limite la largeur */
+    color: white;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
