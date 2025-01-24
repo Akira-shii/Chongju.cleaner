@@ -82,6 +82,7 @@
     <header>
         <h1>Cleaner & Assassin Locations</h1>
         <p>Real-time tracking of our agents in the field. Reserve your agent below!</p>
+        <a href="reservations.html" style="color: red; text-decoration: none;">View Your Reservations</a> <!-- Button to go to reservations page -->
         <a href="info.html" style="color: red; text-decoration: none;">See All Agents</a>
     </header>
     
@@ -165,6 +166,20 @@
             if (date && time && location) {
                 alert(`Your reservation for ${currentAgent.type} (ID: ${currentAgent.id}) has been successfully made on ${date} at ${time} in ${location}! ;)`);
                 closeModal();
+
+                // Sauvegarder la réservation dans le localStorage
+                let reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+                reservations.push({
+                    agentName: currentAgent.type,
+                    date: date,
+                    time: time,
+                    location: location,
+                    weapon: "Not Specified", // Exemple, à personnaliser selon le type d'agent
+                    crimeType: "Not Specified", // Exemple, idem
+                    price: 1000 // Exemple, à ajuster
+                });
+                localStorage.setItem('reservations', JSON.stringify(reservations));
+
             } else {
                 alert('Please fill in all fields!');
             }
