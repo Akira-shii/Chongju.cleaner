@@ -6,9 +6,8 @@
     <title>Cleaner & Assassin Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Style général pour la page */
+        /* Style général */
         body {
             background-color: #000; /* Fond noir */
             color: #f00; /* Texte rouge */
@@ -20,7 +19,7 @@
         header, footer {
             text-align: center;
             padding: 20px;
-            background-color: #111; /* Fond légèrement différent pour le contraste */
+            background-color: #111; /* Gris foncé */
             border-bottom: 1px solid #f00;
         }
 
@@ -33,37 +32,41 @@
         }
 
         h1, h2 {
-            color: #f00; /* Rouge vif pour les titres */
+            color: #f00; /* Rouge vif */
         }
 
         p {
             color: #fff; /* Texte secondaire en blanc */
         }
 
-        /* Style spécifique à la carte */
         #map {
             height: 500px; /* Hauteur de la carte */
             width: 100%;   /* Largeur de la carte */
-            border: 2px solid #f00; /* Bordure rouge autour de la carte */
+            border: 2px solid #f00; /* Bordure rouge */
             margin-top: 20px;
         }
 
-        /* Style des popups Leaflet */
         .leaflet-popup-content {
-            color: #000; /* Texte noir dans les popups pour le contraste */
-            background-color: #fff; /* Fond blanc dans les popups */
+            color: #000; /* Texte noir dans les popups */
+            background-color: #fff; /* Fond blanc */
+            padding: 10px;
+            border-radius: 5px;
         }
 
-        /* Couleur des liens dans les popups */
+        .leaflet-popup-content-wrapper {
+            border: 1px solid #f00; /* Bordure rouge autour des popups */
+        }
+
         .leaflet-popup-content a {
-            color: #f00;
+            color: #f00; /* Lien rouge */
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Cleaner & Assassin Locations</h1>
-        <p>Real-time tracking of our agents in the field.</p>
+        <p>Real-time tracking of our agents in the field. Reserve your agent below!</p>
     </header>
     
     <main>
@@ -84,7 +87,27 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Fonction pour générer des points aléatoires
+        // Icône par défaut pour les nettoyeurs
+        var defaultIcon = L.icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+            shadowSize: [41, 41]
+        });
+
+        // Icône rouge pour les assassins
+        var redIcon = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+            shadowSize: [41, 41]
+        });
+
+        // Fonction pour générer des coordonnées aléatoires autour d'un point central
         function getRandomCoordinates(center, range) {
             return [
                 center[0] + (Math.random() - 0.5) * range,
@@ -92,20 +115,36 @@
             ];
         }
 
-        // Ajouter des points aléatoires pour les nettoyeurs et tueurs
-        var agents = [
-            { type: "Cleaner", availability: "Available" },
-            { type: "Cleaner", availability: "Busy" },
-            { type: "Assassin", availability: "Available" },
-            { type: "Assassin", availability: "Unavailable" },
-        ];
+        // Fonction pour réserver un agent
+        function reserveAgent(type, id) {
+            alert(`You have successfully reserved ${type} with ID: ${id}`);
+        }
 
-        // Ajouter des marqueurs sur la carte
-        agents.forEach(agent => {
-            var coords = getRandomCoordinates([37.5665, 126.9780], 0.1); // Autour de Séoul
-            var marker = L.marker(coords).addTo(map);
-            marker.bindPopup(`<b>Type:</b> ${agent.type}<br><b>Availability:</b> ${agent.availability}`);
-        });
+        // Ajouter 50 nettoyeurs et 50 assassins sur la carte
+        for (let i = 0; i < 50; i++) {
+            let cleanerID = `Cleaner-${i + 1}`;
+            let assassinID = `Assassin-${i + 1}`;
+
+            // Nettoyeur
+            let cleanerCoords = getRandomCoordinates([37.5665, 126.9780], 0.2);
+            let cleanerAvailability = Math.random() > 0.5 ? 'Available' : 'Busy';
+            L.marker(cleanerCoords, { icon: defaultIcon }).addTo(map)
+                .bindPopup(
+                    `<b>Type:</b> Cleaner<br>
+                     <b>Availability:</b> ${cleanerAvailability}<br>
+                     ${cleanerAvailability === 'Available' ? `<button onclick="reserveAgent('Cleaner', '${cleanerID}')">Reserve</button>` : ''}`
+                );
+
+            // Assassin
+            let assassinCoords = getRandomCoordinates([37.5665, 126.9780], 0.2);
+            let assassinAvailability = Math.random() > 0.5 ? 'Available' : 'Unavailable';
+            L.marker(assassinCoords, { icon: redIcon }).addTo(map)
+                .bindPopup(
+                    `<b>Type:</b> Assassin<br>
+                     <b>Availability:</b> ${assassinAvailability}<br>
+                     ${assassinAvailability === 'Available' ? `<button onclick="reserveAgent('Assassin', '${assassinID}')">Reserve</button>` : ''}`
+                );
+        }
     </script>
 </body>
 </html>
