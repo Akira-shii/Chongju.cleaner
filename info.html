@@ -139,6 +139,9 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location" placeholder="Enter location" required>
 
+                <label for="victim">Victim (if applicable):</label>
+                <input type="text" id="victim" placeholder="Enter victim's name" required>
+
                 <label for="weapon">Weapon:</label>
                 <select id="weapon" required>
                     <option value="gun">Gun</option>
@@ -174,6 +177,7 @@
             const priceField = document.getElementById('price');
             const weaponSelect = document.getElementById('weapon');
             const crimeTypeSelect = document.getElementById('crimeType');
+            const victimField = document.getElementById('victim');
 
             // Function to generate a random agent with weapon and crime type options
             function generateRandomAgent() {
@@ -189,6 +193,7 @@
                 return {
                     name: `${randomType} ${Math.random().toString(36).substring(7)}`,
                     basePrice,
+                    type: randomType,
                     weapons: randomWeapons,
                     crimeTypes: randomCrimeTypes
                 };
@@ -223,6 +228,7 @@
             function updateModal(agent) {
                 weaponSelect.innerHTML = '';
                 crimeTypeSelect.innerHTML = '';
+                victimField.style.display = 'none'; // Hide victim field by default
                 agent.weapons.forEach(weapon => {
                     const option = document.createElement('option');
                     option.value = weapon;
@@ -238,6 +244,10 @@
                 });
 
                 priceField.value = '$' + agent.basePrice;
+
+                if (agent.type === 'Killer') {
+                    victimField.style.display = 'block'; // Show victim field for killers
+                }
             }
 
             // Handle reservation form submission
@@ -249,11 +259,9 @@
                 const date = document.getElementById('date').value;
                 const time = document.getElementById('time').value;
                 const location = document.getElementById('location').value;
+                const victim = victimField.value;
 
-                alert(`Reservation confirmed for ${date} at ${time} at ${location}.\nWeapon chosen: ${weapon}\nCrime type: ${crimeType}`);
-                reservationModal.style.display = 'none';
-            });
-        });
-    </script>
-</body>
-</html>
+                if (victim && weapon && crimeType) {
+                    alert(`Reservation confirmed for ${date} at ${time} at ${location}.\nWeapon chosen: ${weapon}\nCrime type: ${crimeType}\nVictim: ${victim}`);
+                } else {
+                    alert(`
