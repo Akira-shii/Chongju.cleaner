@@ -23,43 +23,58 @@
             border-bottom: 1px solid #f00;
         }
 
-        header h1, footer p {
-            margin: 0;
-        }
-
         main {
             padding: 20px;
-        }
-
-        h1, h2 {
-            color: #f00; /* Rouge vif */
-        }
-
-        p {
-            color: #fff; /* Texte secondaire en blanc */
         }
 
         #map {
             height: 500px; /* Hauteur de la carte */
             width: 100%;   /* Largeur de la carte */
-            border: 2px solid #f00; /* Bordure rouge */
+            border: 2px solid #f00;
             margin-top: 20px;
         }
 
-        .leaflet-popup-content {
-            color: #000; /* Texte noir dans les popups */
-            background-color: #fff; /* Fond blanc */
-            padding: 10px;
+        /* Fenêtre modale */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #111;
+            color: #f00;
+            border: 2px solid #f00;
+            border-radius: 8px;
+            padding: 20px;
+            z-index: 1000;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .modal input, .modal button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            border: 1px solid #f00;
             border-radius: 5px;
+            background-color: #000;
+            color: #f00;
         }
 
-        .leaflet-popup-content-wrapper {
-            border: 1px solid #f00; /* Bordure rouge autour des popups */
+        .modal button {
+            cursor: pointer;
         }
 
-        .leaflet-popup-content a {
-            color: #f00; /* Lien rouge */
-            text-decoration: underline;
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 999;
         }
     </style>
 </head>
@@ -78,16 +93,27 @@
         <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
     </footer>
 
+    <!-- Fenêtre modale -->
+    <div id="overlay"></div>
+    <div class="modal" id="reservationModal">
+        <h2>Reservation Details</h2>
+        <form id="reservationForm">
+            <input type="text" id="date" placeholder="Enter date (YYYY-MM-DD)" required />
+            <input type="time" id="time" required />
+            <input type="text" id="location" placeholder="Enter location" required />
+            <button type="button" onclick="submitReservation()">Confirm</button>
+        </form>
+    </div>
+
     <script>
         // Initialisation de la carte
-        var map = L.map('map').setView([37.5665, 126.9780], 10); // Centre sur Séoul, Corée du Sud
+        var map = L.map('map').setView([37.5665, 126.9780], 10);
 
-        // Ajouter une couche de tuiles (carte de base)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Icône par défaut pour les nettoyeurs
+        // Icônes pour nettoyeurs et assassins
         var defaultIcon = L.icon({
             iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
             iconSize: [25, 41],
@@ -97,7 +123,6 @@
             shadowSize: [41, 41]
         });
 
-        // Icône rouge pour les assassins
         var redIcon = L.icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
             iconSize: [25, 41],
@@ -107,7 +132,7 @@
             shadowSize: [41, 41]
         });
 
-        // Fonction pour générer des coordonnées aléatoires autour d'un point central
+        // Générer des points aléatoires
         function getRandomCoordinates(center, range) {
             return [
                 center[0] + (Math.random() - 0.5) * range,
@@ -115,34 +140,58 @@
             ];
         }
 
-        // Fonction pour réserver un agent
-        function reserveAgent(type, id) {
-            alert(`You have successfully reserved ${type} with ID: ${id}`);
+        let currentAgent = null;
+
+        // Ouvrir la fenêtre modale
+        function openModal(type, id) {
+            currentAgent = { type, id };
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('reservationModal').style.display = 'block';
         }
 
-        // Ajouter 50 nettoyeurs et 50 assassins sur la carte
-        for (let i = 0; i < 50; i++) {
-            let cleanerID = `Cleaner-${i + 1}`;
-            let assassinID = `Assassin-${i + 1}`;
+        // Fermer la fenêtre modale
+        function closeModal() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('reservationModal').style.display = 'none';
+        }
 
-            // Nettoyeur
-            let cleanerCoords = getRandomCoordinates([37.5665, 126.9780], 0.2);
-            let cleanerAvailability = Math.random() > 0.5 ? 'Available' : 'Busy';
+        // Soumettre la réservation
+        function submitReservation() {
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const location = document.getElementById('location').value;
+
+            if (date && time && location) {
+                alert(`Your reservation for ${currentAgent.type} (ID: ${currentAgent.id}) has been successfully made on ${date} at ${time} in ${location}! ;)`);
+                closeModal();
+            } else {
+                alert('Please fill in all fields!');
+            }
+        }
+
+        // Ajouter des marqueurs pour nettoyeurs et assassins
+        for (let i = 0; i < 50; i++) {
+            const cleanerID = `Cleaner-${i + 1}`;
+            const assassinID = `Assassin-${i + 1}`;
+
+            const cleanerCoords = getRandomCoordinates([37.5665, 126.9780], 0.2);
+            const assassinCoords = getRandomCoordinates([37.5665, 126.9780], 0.2);
+
+            const cleanerAvailable = Math.random() > 0.5;
+            const assassinAvailable = Math.random() > 0.5;
+
             L.marker(cleanerCoords, { icon: defaultIcon }).addTo(map)
                 .bindPopup(
                     `<b>Type:</b> Cleaner<br>
-                     <b>Availability:</b> ${cleanerAvailability}<br>
-                     ${cleanerAvailability === 'Available' ? `<button onclick="reserveAgent('Cleaner', '${cleanerID}')">Reserve</button>` : ''}`
+                     <b>Availability:</b> ${cleanerAvailable ? 'Available' : 'Busy'}<br>
+                     ${cleanerAvailable ? `<button onclick="openModal('Cleaner', '${cleanerID}')">Reserve</button>` : ''}`
                 );
 
-            // Assassin
-            let assassinCoords = getRandomCoordinates([37.5665, 126.9780], 0.2);
-            let assassinAvailability = Math.random() > 0.5 ? 'Available' : 'Unavailable';
             L.marker(assassinCoords, { icon: redIcon }).addTo(map)
                 .bindPopup(
                     `<b>Type:</b> Assassin<br>
-                     <b>Availability:</b> ${assassinAvailability}<br>
-                     ${assassinAvailability === 'Available' ? `<button onclick="reserveAgent('Assassin', '${assassinID}')">Reserve</button>` : ''}`
+                     <b>Availability:</b> ${assassinAvailable ? 'Available' : 'Unavailable'}<br>
+                     ${assassinAvailable ? `<button onclick="openModal('Assassin', '${assassinID}')">Reserve</button>` : ''}`
                 );
         }
     </script>
