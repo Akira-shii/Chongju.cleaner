@@ -7,9 +7,55 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
+        /* Style général pour la page */
+        body {
+            background-color: #000; /* Fond noir */
+            color: #f00; /* Texte rouge */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #111; /* Fond légèrement différent pour le contraste */
+            border-bottom: 1px solid #f00;
+        }
+
+        header h1, footer p {
+            margin: 0;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #f00; /* Rouge vif pour les titres */
+        }
+
+        p {
+            color: #fff; /* Texte secondaire en blanc */
+        }
+
+        /* Style spécifique à la carte */
         #map {
-            height: 500px;
-            width: 100%;
+            height: 500px; /* Hauteur de la carte */
+            width: 100%;   /* Largeur de la carte */
+            border: 2px solid #f00; /* Bordure rouge autour de la carte */
+            margin-top: 20px;
+        }
+
+        /* Style des popups Leaflet */
+        .leaflet-popup-content {
+            color: #000; /* Texte noir dans les popups pour le contraste */
+            background-color: #fff; /* Fond blanc dans les popups */
+        }
+
+        /* Couleur des liens dans les popups */
+        .leaflet-popup-content a {
+            color: #f00;
         }
     </style>
 </head>
