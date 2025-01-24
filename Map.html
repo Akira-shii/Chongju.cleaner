@@ -9,8 +9,8 @@
     <style>
         /* Style général */
         body {
-            background-color: #000; /* Fond noir */
-            color: #f00; /* Texte rouge */
+            background-color: #000;
+            color: #f00;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -19,7 +19,7 @@
         header, footer {
             text-align: center;
             padding: 20px;
-            background-color: #111; /* Gris foncé */
+            background-color: #111;
             border-bottom: 1px solid #f00;
         }
 
@@ -28,53 +28,23 @@
         }
 
         #map {
-            height: 500px; /* Hauteur de la carte */
-            width: 100%;   /* Largeur de la carte */
+            height: 500px;
+            width: 100%;
             border: 2px solid #f00;
             margin-top: 20px;
         }
 
-        /* Fenêtre modale */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #111;
-            color: #f00;
-            border: 2px solid #f00;
-            border-radius: 8px;
-            padding: 20px;
-            z-index: 1000;
-            width: 300px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        .modal input, .modal button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 8px;
-            border: 1px solid #f00;
-            border-radius: 5px;
-            background-color: #000;
-            color: #f00;
-        }
-
-        .modal button {
+        button {
+            background-color: #f00;
+            color: #000;
+            border: none;
+            padding: 10px;
+            margin: 20px 0;
             cursor: pointer;
         }
 
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none;
-            z-index: 999;
+        button:hover {
+            background-color: #c00;
         }
     </style>
 </head>
@@ -82,12 +52,12 @@
     <header>
         <h1>Cleaner & Assassin Locations</h1>
         <p>Real-time tracking of our agents in the field. Reserve your agent below!</p>
-        <a href="reservations.html" style="color: red; text-decoration: none;">View Your Reservations</a> <!-- Button to go to reservations page -->
         <a href="info.html" style="color: red; text-decoration: none;">See All Agents</a>
     </header>
     
     <main>
         <section id="map"></section>
+        <button onclick="window.location.href='reservations.html';">View My Reservations</button> <!-- View Reservations button -->
     </main>
 
     <footer>
@@ -115,7 +85,6 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Icônes pour nettoyeurs et assassins
         var defaultIcon = L.icon({
             iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
             iconSize: [25, 41],
@@ -167,19 +136,17 @@
                 alert(`Your reservation for ${currentAgent.type} (ID: ${currentAgent.id}) has been successfully made on ${date} at ${time} in ${location}! ;)`);
                 closeModal();
 
-                // Sauvegarder la réservation dans le localStorage
                 let reservations = JSON.parse(localStorage.getItem('reservations')) || [];
                 reservations.push({
                     agentName: currentAgent.type,
                     date: date,
                     time: time,
                     location: location,
-                    weapon: "Not Specified", // Exemple, à personnaliser selon le type d'agent
-                    crimeType: "Not Specified", // Exemple, idem
-                    price: 1000 // Exemple, à ajuster
+                    weapon: "Not Specified", // Exemple
+                    crimeType: "Not Specified", // Exemple
+                    price: 1000 // Exemple
                 });
                 localStorage.setItem('reservations', JSON.stringify(reservations));
-
             } else {
                 alert('Please fill in all fields!');
             }
