@@ -109,6 +109,20 @@
         button:hover {
             background-color: #b22222;
         }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
     </style>
 </head>
 <body>
@@ -160,6 +174,9 @@
         <p>Contact us: +82 10-1234-5678</p>
         <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
     </footer>
+
+    <!-- Back to Map button -->
+    <button class="back-button" onclick="window.location.href='map.html';">Back to Map</button>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
