@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent Information</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* General styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #121212;
@@ -23,7 +21,6 @@
             margin-top: 20px;
         }
 
-        /* Agent container and agent card styles */
         #agentContainer {
             display: flex;
             flex-wrap: wrap;
@@ -32,7 +29,7 @@
             gap: 20px;
             padding: 10px;
             overflow-y: auto;
-            max-height: 400px; /* Allows scrolling */
+            max-height: 400px;
         }
 
         .agentCard {
@@ -48,7 +45,6 @@
             background-color: #333;
         }
 
-        /* Modal styling */
         .modal {
             display: none;
             position: fixed;
@@ -84,7 +80,6 @@
             cursor: pointer;
         }
 
-        /* Form styling */
         label {
             display: block;
             margin-top: 10px;
@@ -139,10 +134,9 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location" placeholder="Enter location" required>
 
-                <label for="victim">Victim (if applicable):</label>
-                <input type="text" id="victim" placeholder="Enter victim's name" required>
+                <label for="victim" id="victimLabel" style="display:none;">Victim:</label>
+                <input type="text" id="victim" placeholder="Enter victim's name" style="display:none;">
 
-                <!-- Scene Complexity for cleaners -->
                 <label for="sceneComplexity" id="sceneComplexityLabel" style="display:none;">Scene Complexity:</label>
                 <select id="sceneComplexity" style="display:none;">
                     <option value="1">Level 1: Simple</option>
@@ -150,14 +144,6 @@
                     <option value="3">Level 3</option>
                     <option value="4">Level 4</option>
                     <option value="5">Level 5: Complex</option>
-                </select>
-
-                <!-- Removed Weapon and Crime Type for Cleaner -->
-                <label for="weapon" id="weaponLabel" style="display:none;">Weapon:</label>
-                <select id="weapon" style="display:none;">
-                    <option value="gun">Gun</option>
-                    <option value="knife">Knife</option>
-                    <option value="poison">Poison</option>
                 </select>
 
                 <label for="price">Price:</label>
@@ -180,35 +166,23 @@
             const closeModal = document.getElementById('closeModal');
             const reservationForm = document.getElementById('reservationForm');
             const priceField = document.getElementById('price');
-            const weaponSelect = document.getElementById('weapon');
-            const crimeTypeSelect = document.getElementById('crimeType');
             const victimField = document.getElementById('victim');
             const sceneComplexitySelect = document.getElementById('sceneComplexity');
             const sceneComplexityLabel = document.getElementById('sceneComplexityLabel');
-            const weaponLabel = document.getElementById('weaponLabel');
-            const crimeTypeLabel = document.getElementById('crimeTypeLabel');
+            const victimLabel = document.getElementById('victimLabel');
 
-            // Function to generate a random agent with weapon and crime type options
             function generateRandomAgent() {
                 const agentTypes = ['Killer', 'Cleaner'];
-                const weapons = ['gun', 'knife', 'poison', 'rocket launcher','dildo shaped sword', 'killer surprise'];
-                const crimeTypes = ['masked', 'clean'];
-
-                const randomType = agentTypes[Math.floor(Math.random() * agentTypes.length)];
-                const randomWeapons = weapons.slice(0, Math.floor(Math.random() * weapons.length) + 1);
-                const randomCrimeTypes = crimeTypes.slice(0, Math.floor(Math.random() * crimeTypes.length) + 1);
                 const basePrice = Math.floor(Math.random() * 1000) + 500;
+                const randomType = agentTypes[Math.floor(Math.random() * agentTypes.length)];
 
                 return {
                     name: `${randomType} ${Math.random().toString(36).substring(7)}`,
                     basePrice,
-                    type: randomType,
-                    weapons: randomWeapons,
-                    crimeTypes: randomCrimeTypes
+                    type: randomType
                 };
             }
 
-            // Generate 100 agents and display them
             for (let i = 0; i < 100; i++) {
                 const agent = generateRandomAgent();
                 const agentCard = document.createElement('div');
@@ -221,53 +195,32 @@
                 agentContainer.appendChild(agentCard);
             }
 
-            // Close modal
             closeModal.addEventListener('click', function() {
                 reservationModal.style.display = 'none';
             });
 
-            // Close modal when clicking outside of it
             window.addEventListener('click', function(event) {
                 if (event.target === reservationModal) {
                     reservationModal.style.display = 'none';
                 }
             });
 
-            // Update modal with agent's info
             function updateModal(agent) {
-                weaponSelect.innerHTML = '';
-                crimeTypeSelect.innerHTML = '';
-                victimField.style.display = 'none'; // Hide victim field by default
-                sceneComplexitySelect.style.display = 'none'; // Hide scene complexity for killers
-                sceneComplexityLabel.style.display = 'none'; // Hide scene complexity label
-
-                agent.weapons.forEach(weapon => {
-                    const option = document.createElement('option');
-                    option.value = weapon;
-                    option.textContent = weapon.charAt(0).toUpperCase() + weapon.slice(1);
-                    weaponSelect.appendChild(option);
-                });
-
-                agent.crimeTypes.forEach(crimeType => {
-                    const option = document.createElement('option');
-                    option.value = crimeType;
-                    option.textContent = crimeType.charAt(0).toUpperCase() + crimeType.slice(1);
-                    crimeTypeSelect.appendChild(option);
-                });
-
                 priceField.value = '$' + agent.basePrice;
+                victimField.style.display = 'none';
+                victimLabel.style.display = 'none';
+                sceneComplexitySelect.style.display = 'none';
+                sceneComplexityLabel.style.display = 'none';
 
                 if (agent.type === 'Killer') {
-                    victimField.style.display = 'block'; // Show victim field for killers
-                    weaponLabel.style.display = 'block'; // Show weapon select for killers
-                    crimeTypeLabel.style.display = 'block'; // Show crime type for killers
+                    victimField.style.display = 'block';
+                    victimLabel.style.display = 'block';
                 } else if (agent.type === 'Cleaner') {
-                    sceneComplexitySelect.style.display = 'block'; // Show scene complexity for cleaners
-                    sceneComplexityLabel.style.display = 'block'; // Show scene complexity label for cleaners
+                    sceneComplexitySelect.style.display = 'block';
+                    sceneComplexityLabel.style.display = 'block';
                 }
             }
 
-            // Handle reservation form submission
             reservationForm.addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -276,8 +229,6 @@
                 const location = document.getElementById('location').value;
                 const victim = victimField.value;
                 const sceneComplexity = sceneComplexitySelect.value;
-                const weapon = weaponSelect.value;
-                const crimeType = crimeTypeSelect.value;
 
                 let reservationDetails = `Reservation confirmed for ${date} at ${time} at ${location}.`;
 
@@ -285,13 +236,14 @@
                     reservationDetails += `\nVictim: ${victim}`;
                 }
 
-                if (weapon) {
-                    reservationDetails += `\nWeapon chosen: ${weapon}`;
-                }
-
                 if (sceneComplexity) {
                     reservationDetails += `\nScene Complexity Level: ${sceneComplexity}`;
                 }
 
                 alert(reservationDetails);
-                reservation
+                reservationModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
