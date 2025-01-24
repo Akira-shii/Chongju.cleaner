@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleaner & Assassin Locations</title>
-    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
+    <title>Cleaner & Assassin Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -13,15 +20,45 @@
     </header>
     
     <main>
-        <section id="map">
-            <h2>Current Locations</h2>
-            <p>The map is under construction. Stay tuned for updates!</p>
-        </section>
+        <section id="map"></section>
     </main>
 
     <footer>
         <p>Contact us: +82 10-1234-5678</p>
         <p>Address: 7-13, Gyeonggi-ro, Jungang-gun, Gyeonggi-do, South Korea</p>
     </footer>
+
+    <script>
+        // Initialisation de la carte
+        var map = L.map('map').setView([37.5665, 126.9780], 10); // Centre sur Séoul, Corée du Sud
+
+        // Ajouter une couche de tuiles (carte de base)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Fonction pour générer des points aléatoires
+        function getRandomCoordinates(center, range) {
+            return [
+                center[0] + (Math.random() - 0.5) * range,
+                center[1] + (Math.random() - 0.5) * range
+            ];
+        }
+
+        // Ajouter des points aléatoires pour les nettoyeurs et tueurs
+        var agents = [
+            { type: "Cleaner", availability: "Available" },
+            { type: "Cleaner", availability: "Busy" },
+            { type: "Assassin", availability: "Available" },
+            { type: "Assassin", availability: "Unavailable" },
+        ];
+
+        // Ajouter des marqueurs sur la carte
+        agents.forEach(agent => {
+            var coords = getRandomCoordinates([37.5665, 126.9780], 0.1); // Autour de Séoul
+            var marker = L.marker(coords).addTo(map);
+            marker.bindPopup(`<b>Type:</b> ${agent.type}<br><b>Availability:</b> ${agent.availability}`);
+        });
+    </script>
 </body>
 </html>
