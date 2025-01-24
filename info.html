@@ -142,17 +142,22 @@
                 <label for="victim">Victim (if applicable):</label>
                 <input type="text" id="victim" placeholder="Enter victim's name" required>
 
-                <label for="weapon">Weapon:</label>
-                <select id="weapon" required>
+                <!-- Scene Complexity for cleaners -->
+                <label for="sceneComplexity" id="sceneComplexityLabel" style="display:none;">Scene Complexity:</label>
+                <select id="sceneComplexity" style="display:none;">
+                    <option value="1">Level 1: Simple</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5">Level 5: Complex</option>
+                </select>
+
+                <!-- Removed Weapon and Crime Type for Cleaner -->
+                <label for="weapon" id="weaponLabel" style="display:none;">Weapon:</label>
+                <select id="weapon" style="display:none;">
                     <option value="gun">Gun</option>
                     <option value="knife">Knife</option>
                     <option value="poison">Poison</option>
-                </select>
-
-                <label for="crimeType">Crime Type:</label>
-                <select id="crimeType" required>
-                    <option value="masked">Masked Crime</option>
-                    <option value="clean">Complete Cleanup</option>
                 </select>
 
                 <label for="price">Price:</label>
@@ -178,6 +183,10 @@
             const weaponSelect = document.getElementById('weapon');
             const crimeTypeSelect = document.getElementById('crimeType');
             const victimField = document.getElementById('victim');
+            const sceneComplexitySelect = document.getElementById('sceneComplexity');
+            const sceneComplexityLabel = document.getElementById('sceneComplexityLabel');
+            const weaponLabel = document.getElementById('weaponLabel');
+            const crimeTypeLabel = document.getElementById('crimeTypeLabel');
 
             // Function to generate a random agent with weapon and crime type options
             function generateRandomAgent() {
@@ -229,6 +238,9 @@
                 weaponSelect.innerHTML = '';
                 crimeTypeSelect.innerHTML = '';
                 victimField.style.display = 'none'; // Hide victim field by default
+                sceneComplexitySelect.style.display = 'none'; // Hide scene complexity for killers
+                sceneComplexityLabel.style.display = 'none'; // Hide scene complexity label
+
                 agent.weapons.forEach(weapon => {
                     const option = document.createElement('option');
                     option.value = weapon;
@@ -247,6 +259,11 @@
 
                 if (agent.type === 'Killer') {
                     victimField.style.display = 'block'; // Show victim field for killers
+                    weaponLabel.style.display = 'block'; // Show weapon select for killers
+                    crimeTypeLabel.style.display = 'block'; // Show crime type for killers
+                } else if (agent.type === 'Cleaner') {
+                    sceneComplexitySelect.style.display = 'block'; // Show scene complexity for cleaners
+                    sceneComplexityLabel.style.display = 'block'; // Show scene complexity label for cleaners
                 }
             }
 
@@ -254,14 +271,27 @@
             reservationForm.addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                const weapon = weaponSelect.value;
-                const crimeType = crimeTypeSelect.value;
                 const date = document.getElementById('date').value;
                 const time = document.getElementById('time').value;
                 const location = document.getElementById('location').value;
                 const victim = victimField.value;
+                const sceneComplexity = sceneComplexitySelect.value;
+                const weapon = weaponSelect.value;
+                const crimeType = crimeTypeSelect.value;
 
-                if (victim && weapon && crimeType) {
-                    alert(`Reservation confirmed for ${date} at ${time} at ${location}.\nWeapon chosen: ${weapon}\nCrime type: ${crimeType}\nVictim: ${victim}`);
-                } else {
-                    alert(`
+                let reservationDetails = `Reservation confirmed for ${date} at ${time} at ${location}.`;
+
+                if (victim) {
+                    reservationDetails += `\nVictim: ${victim}`;
+                }
+
+                if (weapon) {
+                    reservationDetails += `\nWeapon chosen: ${weapon}`;
+                }
+
+                if (sceneComplexity) {
+                    reservationDetails += `\nScene Complexity Level: ${sceneComplexity}`;
+                }
+
+                alert(reservationDetails);
+                reservation
