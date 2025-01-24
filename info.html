@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent Information</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Modal style */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -24,13 +57,29 @@
             <form id="reservationForm">
                 <label for="date">Date:</label>
                 <input type="date" id="date" required>
-                
+
                 <label for="time">Time:</label>
                 <input type="time" id="time" required>
-                
+
                 <label for="location">Location:</label>
                 <input type="text" id="location" placeholder="Enter location" required>
-                
+
+                <label for="weapon">Weapon:</label>
+                <select id="weapon" required>
+                    <option value="gun">Gun</option>
+                    <option value="knife">Knife</option>
+                    <option value="poison">Poison</option>
+                </select>
+
+                <label for="crimeType">Crime Type:</label>
+                <select id="crimeType" required>
+                    <option value="masked">Masked Crime</option>
+                    <option value="clean">Complete Cleanup</option>
+                </select>
+
+                <label for="price">Price:</label>
+                <input type="text" id="price" disabled>
+
                 <button type="submit" id="confirmReservation">Confirm Reservation</button>
             </form>
         </div>
@@ -42,33 +91,36 @@
     </footer>
 
     <script>
-        // JavaScript pour afficher et fermer la modal
         document.addEventListener('DOMContentLoaded', function() {
             const agentContainer = document.getElementById('agentContainer');
             const reservationModal = document.getElementById('reservationModal');
             const closeModal = document.getElementById('closeModal');
             const reservationForm = document.getElementById('reservationForm');
-            const confirmReservation = document.getElementById('confirmReservation');
+            const priceField = document.getElementById('price');
+            const weaponSelect = document.getElementById('weapon');
+            const crimeTypeSelect = document.getElementById('crimeType');
 
-            // Exemple d'agents à afficher
+            // Exemple d'agents
             const agents = [
-                { name: 'Agent A' },
-                { name: 'Agent B' },
-                { name: 'Agent C' }
+                { name: 'Tueur A', basePrice: 500, weapons: ['gun', 'knife'], crimeTypes: ['masked', 'clean'] },
+                { name: 'Tueur B', basePrice: 600, weapons: ['gun', 'poison'], crimeTypes: ['masked'] },
+                { name: 'Nettoyeur A', basePrice: 300, weapons: ['knife', 'poison'], crimeTypes: ['clean'] },
+                { name: 'Nettoyeur B', basePrice: 400, weapons: ['gun'], crimeTypes: ['clean'] }
             ];
 
-            // Créer des boutons pour chaque agent
+            // Afficher les agents
             agents.forEach(agent => {
                 const agentButton = document.createElement('button');
                 agentButton.textContent = agent.name;
                 agentButton.addEventListener('click', function() {
-                    // Afficher la modal lorsqu'un agent est cliqué
+                    // Lorsque l'on clique sur un agent, ouvrir la modal et mettre à jour les options
+                    updateModal(agent);
                     reservationModal.style.display = 'block';
                 });
                 agentContainer.appendChild(agentButton);
             });
 
-            // Fermer la modal lorsque l'on clique sur la croix
+            // Fermer la modal
             closeModal.addEventListener('click', function() {
                 reservationModal.style.display = 'none';
             });
@@ -80,17 +132,39 @@
                 }
             });
 
-            // Gérer la soumission du formulaire
+            // Mettre à jour la modal avec les informations de l'agent sélectionné
+            function updateModal(agent) {
+                // Réinitialiser les champs de la modal
+                weaponSelect.innerHTML = '';
+                crimeTypeSelect.innerHTML = '';
+                agent.weapons.forEach(weapon => {
+                    const option = document.createElement('option');
+                    option.value = weapon;
+                    option.textContent = weapon.charAt(0).toUpperCase() + weapon.slice(1);
+                    weaponSelect.appendChild(option);
+                });
+
+                agent.crimeTypes.forEach(crimeType => {
+                    const option = document.createElement('option');
+                    option.value = crimeType;
+                    option.textContent = crimeType.charAt(0).toUpperCase() + crimeType.slice(1);
+                    crimeTypeSelect.appendChild(option);
+                });
+
+                priceField.value = '$' + agent.basePrice; // Mettre à jour le prix de base de l'agent
+            }
+
+            // Gérer la soumission du formulaire de réservation
             reservationForm.addEventListener('submit', function(event) {
                 event.preventDefault();
+
+                const weapon = weaponSelect.value;
+                const crimeType = crimeTypeSelect.value;
                 const date = document.getElementById('date').value;
                 const time = document.getElementById('time').value;
                 const location = document.getElementById('location').value;
 
-                // Ici, vous pouvez envoyer les données à un serveur ou les afficher
-                alert(`Réservation confirmée pour le ${date} à ${time} à ${location}`);
-
-                // Fermer la modal après la soumission
+                alert(`Réservation confirmée pour le ${date} à ${time} à ${location}.\nArme choisie: ${weapon}\nType de crime: ${crimeType}`);
                 reservationModal.style.display = 'none';
             });
         });
