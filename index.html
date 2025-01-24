@@ -4,35 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chongju Cleaner.Co</title>
-    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
+        <img src="logo.svg" alt="Chongju Cleaner Logo" id="logo">
         <h1>Chongju Cleaner.Co</h1>
-        <p>No mess. No trace.</p>
+        <p class="slogan">"No mess. No trace."</p>
     </header>
 
     <main>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>
-                Chongju Cleaner.Co specializes in handling delicate and discreet situations. Whether it's cleaning up after accidents, handling delicate tasks, or leaving no trace, we are the professionals you need.
-            </p>
-        </section>
-
-        <section id="login">
-            <h2>Login</h2>
+        <div id="login-container">
             <form id="loginForm" onsubmit="return validateLogin()">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" placeholder="[exemple]" required>
 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" placeholder="******" required>
 
-                <button type="submit">Login</button>
+                <button type="submit">Log in</button>
             </form>
             <p id="loginMessage"></p>
-        </section>
+        </div>
     </main>
 
     <footer>
@@ -43,20 +36,16 @@
     <script>
         // Fonction de validation du formulaire de connexion
         function validateLogin() {
-            // Récupérer les valeurs saisies
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            // Vérification des identifiants (à personnaliser selon ton besoin)
             if (username === "Akira" && password === "Gore#15") {
-                // Rediriger vers la page Map.html si les identifiants sont corrects
-                window.location.href = "Map.Html";
+                window.location.href = "map.html";
                 return false; // Empêche la soumission réelle du formulaire
             } else {
-                // Afficher un message d'erreur si les identifiants sont incorrects
                 document.getElementById("loginMessage").textContent = "Incorrect username or password.";
                 document.getElementById("loginMessage").style.color = "red";
-                return false; // Empêche la soumission réelle du formulaire
+                return false;
             }
         }
     </script>
